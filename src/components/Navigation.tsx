@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -11,10 +13,19 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold brand-name">Crude Capital</h1>
-              <p className="text-sm text-gold-600 font-mono">Payment Intelligence. Applied.</p>
-            </div>
+            <Link href="/" className="flex-shrink-0 flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <Image
+                src="/images/Logo/Logo.png"
+                alt="Crude Capital"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
+              <div>
+                <h1 className="text-xl font-bold brand-name">Crude Capital</h1>
+                <p className="text-sm text-gold-600 font-mono">Payment Intelligence. Applied.</p>
+              </div>
+            </Link>
           </div>
 
           <div className="hidden md:block">
@@ -35,7 +46,7 @@ export default function Navigation() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <a href="#calculator" className="nav-link text-sm font-medium">
+            <a href="/tools" className="nav-link text-sm font-medium">
               PAYMENT CALCULATORS
             </a>
             <a href="#contact" className="bg-accent-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-accent-700 hover:-translate-y-0.5 transition-all duration-200 cta-button shadow-md">
@@ -72,7 +83,7 @@ export default function Navigation() {
                 <a href="#contact" className="bg-accent-600 text-white block px-4 py-3 rounded-lg text-sm font-semibold text-center cta-button">
                   Book Consultation
                 </a>
-                <a href="#calculator" className="text-gray-600 hover:text-gray-900 block px-3 py-2 text-sm font-medium text-center">
+                <a href="/tools" className="text-gray-600 hover:text-gray-900 block px-3 py-2 text-sm font-medium text-center">
                   PAYMENT CALCULATORS
                 </a>
               </div>

@@ -61,10 +61,7 @@ export default function ToolsPage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
               Payment Intelligence Calculators
             </h1>
-            <p className="text-xl sm:text-2xl text-slate-300 mb-4 leading-relaxed">
-              Most UK businesses lose <span className="text-teal-400 font-semibold">£8K+ annually</span> to payment inefficiencies they don't measure.
-            </p>
-            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
+            <p className="text-xl sm:text-2xl text-slate-300 leading-relaxed">
               Quantify what you're leaving on the table. Then optimize strategic infrastructure to capture it.
             </p>
           </div>

@@ -261,9 +261,11 @@
                 <div class="cta-section animate-on-scroll">
                     <h3>Ready to Realize This Potential?</h3>
                     <p>Get your detailed revenue liberation analysis sent directly to your inbox.</p>
-                    <form id="cta-form" class="cta-form" action="https://formspree.io/f/xblpyjlw" method="POST" style="display: flex; gap: 1rem; max-width: 600px; margin: 2rem auto; flex-wrap: wrap; justify-content: center;">
+                    <form id="cta-form" class="cta-form" action="https://api.web3forms.com/submit" method="POST" style="display: flex; gap: 1rem; max-width: 600px; margin: 2rem auto; flex-wrap: wrap; justify-content: center;">
+                        <input type="hidden" name="access_key" value="9b04c636-7380-446b-9269-f2a283b02a81">
+                        <input type="hidden" name="subject" value="New Submission: Revenue Liberation Calculator">
+                        <input type="hidden" name="from_name" value="Crude Capital Calculators">
                         <input type="hidden" name="calculator" value="Revenue Liberation Engine">
-                        <input type="hidden" name="calendly" value="https://calendly.com/crude-capital-info/30min">
                         <input type="hidden" id="calculation-results" name="results" value="">
                         <input type="email" id="prospect-email" name="email" placeholder="Enter your business email" required style="flex: 1 1 300px; padding: 1rem; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem; min-width: 250px;">
                         <button type="submit" id="cta-button" class="cta-button" disabled style="flex: 0 0 auto; white-space: nowrap;">
@@ -271,6 +273,9 @@
                             <span class="arrow">→</span>
                         </button>
                     </form>
+                    <p style="color: rgba(17, 24, 39, 0.7); margin-top: 16px; font-size: 14px; text-align: center;">
+                        or <a href="https://calendly.com/crude-capital-info/30min" target="_blank" rel="noopener noreferrer" style="color: #14B8A6; text-decoration: underline; font-weight: 600;">Book a Consultation</a> to discuss your results
+                    </p>
                 </div>
             </div>
         </main>

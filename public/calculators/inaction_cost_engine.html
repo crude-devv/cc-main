@@ -137,13 +137,18 @@
 
                 <div class="cta-section">
                     <h3>Stop The Drain. Recapture Your Profit.</h3>
-                    <form id="cta-form" class="cta-form" action="https://formspree.io/f/xblpyjlw" method="POST">
+                    <form id="cta-form" class="cta-form" action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="9b04c636-7380-446b-9269-f2a283b02a81">
+                        <input type="hidden" name="subject" value="New Submission: Cost of Inaction Calculator">
+                        <input type="hidden" name="from_name" value="Crude Capital Calculators">
                         <input type="hidden" name="calculator" value="Cost of Inaction Engine">
-                        <input type="hidden" name="calendly" value="https://calendly.com/crude-capital-info/30min">
                         <input type="hidden" id="calculation-results" name="results" value="">
                         <input type="email" id="prospect-email" name="email" placeholder="Enter your business email" required>
                         <button type="submit" id="cta-button" class="cta-button" disabled>Get Your Detailed Report</button>
                     </form>
+                    <p style="color: rgba(255,255,255,0.7); margin-top: 16px; font-size: 14px; text-align: center;">
+                        or <a href="https://calendly.com/crude-capital-info/30min" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: underline; font-weight: 600;">Book a Consultation</a> to discuss your results
+                    </p>
                 </div>
             </div>
         </main>
