@@ -47,31 +47,39 @@ export default function Contact() {
       const myForm = e.target as HTMLFormElement
       const formData = new FormData(myForm)
 
+      // Log what we're sending for debugging
+      console.log('Form Data:', Object.fromEntries(formData))
+
       fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData as any).toString()
       })
-        .then(() => {
-          alert('Consultation booked! Check your email for confirmation.')
-          // Reset form
-          setFormData({
-            businessName: '',
-            volume: '',
-            primaryGoal: '',
-            name: '',
-            email: '',
-            phone: '',
-            provider: '',
-            additionalInterests: '',
-            context: ''
-          })
-          setIsSubmitted(false)
+        .then(response => {
+          console.log('Response status:', response.status)
+          if (response.ok) {
+            alert('Inquiry Received!\n\nWe review all submissions personally. Expect contact within 24 hours.')
+            // Reset form
+            setFormData({
+              businessName: '',
+              volume: '',
+              primaryGoal: '',
+              name: '',
+              email: '',
+              phone: '',
+              provider: '',
+              additionalInterests: '',
+              context: ''
+            })
+            setIsSubmitted(false)
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
         })
         .catch(error => {
+          console.error('Form submission error:', error)
           alert('Error submitting form. Please try again.')
           setIsSubmitted(false)
-          console.error(error)
         })
     }
   }
@@ -82,7 +90,7 @@ export default function Contact() {
         <div className="text-center mb-16">
           <h2 className="section-title">Strategic Consultation</h2>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-            We work closely with business owners and operators who process £250K+ annually. We are proud to help them turn their payment systems into their competitive advantage.
+            We work closely with business owners and operators, helping them turn their payment systems into their competitive advantage.
           </p>
         </div>
 
@@ -270,24 +278,6 @@ export default function Contact() {
                 </button>
               </div>
             </form>
-
-            <div className="text-center mt-8 pt-8 border-t border-gray-300">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Your 30-Day Intelligence Trial:</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700 mb-6">
-                <div className="flex items-center justify-center">
-                  <span className="mr-2">•</span>
-                  Payment Efficiency Analysis
-                </div>
-                <div className="flex items-center justify-center">
-                  <span className="mr-2">•</span>
-                  Infrastructure Optimization Strategy
-                </div>
-                <div className="flex items-center justify-center">
-                  <span className="mr-2">•</span>
-                  30-Day Implementation Support
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="mt-12 bg-gray-100 rounded-lg p-6 text-center">
