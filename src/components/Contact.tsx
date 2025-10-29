@@ -90,6 +90,7 @@ export default function Contact() {
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-100">
             <form name="contact" method="POST" onSubmit={handleSubmit} className="contact-form">
               <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="bot-field" />
               <div className="space-y-6">
 
                 {/* 1. Name */}
@@ -290,7 +291,7 @@ export default function Contact() {
           </div>
 
           <div className="mt-12 bg-gray-100 rounded-lg p-6 text-center">
-            <h4 className="font-semibold text-gray-900 mb-2">Not qualified yet?</h4>
+            <h4 className="font-semibold text-gray-900 mb-2">Stay In The Loop</h4>
             <p className="text-gray-600 mb-4">
               Join our market intelligence brief for payment infrastructure insights and strategic guidance.
             </p>
