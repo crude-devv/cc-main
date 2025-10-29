@@ -43,8 +43,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#calculator" className="hover:text-white transition-colors">
-                  Payment Efficiency Calculator
+                <a href="/tools" className="hover:text-white transition-colors">
+                  Payment Calculators
                 </a>
               </li>
             </ul>

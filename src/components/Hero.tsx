@@ -51,8 +51,8 @@ export default function Hero() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a 
-              href="#contact" 
+            <a
+              href="/tools"
               className="cta-button cta-button-primary relative z-10"
               style={{ backgroundColor: '#047857' }}
             >
