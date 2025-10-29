@@ -5,7 +5,7 @@ export default function Partnership() {
     <section className="section-navy py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="section-title">Advisory vs Transaction</h2>
+          <h2 className="section-title">The Crude Capital Advantage</h2>
           <p className="text-lg text-gray-700 mb-8">
             Most businesses approach payment infrastructure through one of two lenses:
           </p>
