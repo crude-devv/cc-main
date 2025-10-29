@@ -37,44 +37,47 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (validateForm()) {
-      // For Netlify Forms to work properly with Next.js, we need to submit without AJAX
-      // Store success state and let the natural form submission happen
+      setIsSubmitted(true)
+
       const myForm = e.target as HTMLFormElement
+      const formData = new FormData(myForm)
 
-      // Create a hidden iframe to submit the form without page reload
-      const iframe = document.createElement('iframe')
-      iframe.name = 'hidden-form-iframe'
-      iframe.style.display = 'none'
-      document.body.appendChild(iframe)
-
-      // Set form to submit to iframe
-      myForm.target = 'hidden-form-iframe'
-
-      // Show success message after a brief delay
-      setTimeout(() => {
-        alert('Inquiry Received!\n\nWe review all submissions personally. Expect contact within 24 hours.')
-        // Reset form
-        setFormData({
-          businessName: '',
-          volume: '',
-          primaryGoal: '',
-          name: '',
-          email: '',
-          phone: '',
-          provider: '',
-          additionalInterests: '',
-          context: ''
+      try {
+        const response = await fetch('https://formspree.io/f/xblpyjlw', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
         })
-        // Remove iframe
-        document.body.removeChild(iframe)
-      }, 1000)
 
-      // Actually submit the form (not prevented)
-      myForm.submit()
+        if (response.ok) {
+          alert('Inquiry Received!\n\nWe review all submissions personally. Expect contact within 24 hours.')
+          // Reset form
+          setFormData({
+            businessName: '',
+            volume: '',
+            primaryGoal: '',
+            name: '',
+            email: '',
+            phone: '',
+            provider: '',
+            additionalInterests: '',
+            context: ''
+          })
+          setIsSubmitted(false)
+        } else {
+          throw new Error('Form submission failed')
+        }
+      } catch (error) {
+        console.error('Form submission error:', error)
+        alert('Error submitting form. Please try again.')
+        setIsSubmitted(false)
+      }
     }
   }
 
@@ -90,9 +93,7 @@ export default function Contact() {
 
         <div className="max-w-2xl mx-auto">
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-100">
-            <form name="contact" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={handleSubmit} className="contact-form">
-              <input type="hidden" name="form-name" value="contact" />
-              <input type="hidden" name="bot-field" />
+            <form name="contact" method="POST" onSubmit={handleSubmit} className="contact-form">
               <div className="space-y-6">
 
                 {/* 1. Name */}
