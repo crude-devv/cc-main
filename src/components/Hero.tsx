@@ -15,8 +15,8 @@ export default function Hero() {
           <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Most UK businesses lose{' '}
             <span className="relative inline-block">
-              <span className="relative z-10" style={{ color: '#047857' }}>
-                <AnimatedCounter target={8} prefix="£" suffix="K+ annually" className="font-bold" />
+              <span className="relative z-10 text-accent-green">
+                <AnimatedCounter target={8} prefix="£" suffix="K+ annually" className="font-bold text-accent-green" />
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-green/20 to-accent-green/10 blur-lg transform scale-110"></div>
             </span>{' '}
@@ -30,21 +30,21 @@ export default function Hero() {
           <div id="hero-stats" className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
             <div className="pattern-card text-center bg-white/80 backdrop-blur-sm">
               <div className="stat-counter mb-2">
-                <AnimatedCounter target={8247} prefix="£" separator className="stat-counter" style={{ color: '#047857' }} />
+                <AnimatedCounter target={8247} prefix="£" separator className="stat-counter text-accent-green" />
               </div>
               <p className="text-sm text-gray-600 font-medium">Average annual settlement delay cost</p>
             </div>
-            
+
             <div className="pattern-card text-center bg-white/80 backdrop-blur-sm">
               <div className="stat-counter mb-2">
-                <AnimatedCounter target={58} suffix="%" startDelay={200} className="stat-counter" style={{ color: '#047857' }} />
+                <AnimatedCounter target={58} suffix="%" startDelay={200} className="stat-counter text-accent-green" />
               </div>
               <p className="text-sm text-gray-600 font-medium">Faster transaction processing vs industry</p>
             </div>
-            
+
             <div className="pattern-card text-center bg-white/80 backdrop-blur-sm">
               <div className="stat-counter mb-2">
-                <AnimatedCounter target={48} suffix="hrs" startDelay={400} className="stat-counter" style={{ color: '#047857' }} />
+                <AnimatedCounter target={48} suffix="hrs" startDelay={400} className="stat-counter text-accent-green" />
               </div>
               <p className="text-sm text-gray-600 font-medium">Weekend capital access advantage</p>
             </div>
