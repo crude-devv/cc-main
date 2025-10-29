@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Search, Clock, Settings, TrendingUp, LineChart, Users } from 'lucide-react';
 
 export const metadata = {
   title: 'Payment Intelligence Calculators | Crude Capital',
@@ -11,42 +12,42 @@ const calculators = [
     title: 'True Cost of Ownership',
     description: 'Calculate hidden costs your current provider doesn\'t show you. Delayed capital, compliance overhead, integration inefficiencies.',
     cta: 'Analyze My Infrastructure',
-    icon: '💰',
+    icon: Search,
   },
   {
     id: 'inaction-cost',
     title: 'Cost of Delayed Action',
     description: 'Quantify how payment inefficiencies compound over time. Every month of inaction costs measurable competitive advantage.',
     cta: 'Calculate Inaction Cost',
-    icon: '⏳',
+    icon: Clock,
   },
   {
     id: 'operational-efficiency',
     title: 'Operational Efficiency Gap',
     description: 'Multi-location businesses lose 15-20 hours monthly reconciling disparate systems. Measure your operational drag.',
     cta: 'Measure Efficiency Loss',
-    icon: '⚙️',
+    icon: Settings,
   },
   {
     id: 'revenue-liberation',
     title: 'Revenue Liberation Analysis',
     description: 'Faster settlement timing = improved working capital. Calculate how next-day funding unlocks revenue trapped in payment cycles.',
     cta: 'Calculate Capital Impact',
-    icon: '🚀',
+    icon: TrendingUp,
   },
   {
     id: 'growth-funding',
     title: 'Growth Capital Optimization',
     description: 'Strategic payment infrastructure can fund growth without external capital. Quantify your internal funding capacity.',
     cta: 'Analyze Funding Potential',
-    icon: '📈',
+    icon: LineChart,
   },
   {
     id: 'team-incentive',
     title: 'Team Performance Impact',
     description: 'Transaction speed affects customer experience. Calculate how payment efficiency translates to team productivity gains.',
     cta: 'Calculate Team Impact',
-    icon: '👥',
+    icon: Users,
   },
 ];
 
@@ -71,51 +72,73 @@ export default function ToolsPage() {
       {/* Calculator Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {calculators.map((calculator) => (
-            <Link
-              key={calculator.id}
-              href={`/tools/${calculator.id}`}
-              className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:bg-slate-800/80 hover:border-teal-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/20 hover:-translate-y-1"
-            >
-              {/* Icon */}
-              <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                {calculator.icon}
-              </div>
+          {calculators.map((calculator, index) => {
+            const IconComponent = calculator.icon;
+            return (
+              <Link
+                key={calculator.id}
+                href={`/tools/${calculator.id}`}
+                className="group relative bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:bg-slate-800 hover:border-teal-500/70 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/30 hover:-translate-y-2 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Icon with background */}
+                <div className="mb-6 w-16 h-16 rounded-xl bg-teal-500/10 flex items-center justify-center group-hover:bg-teal-500/20 group-hover:scale-110 transition-all duration-300">
+                  <IconComponent className="w-8 h-8 text-teal-400 group-hover:text-teal-300" strokeWidth={2} />
+                </div>
 
-              {/* Title */}
-              <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-teal-400 transition-colors">
-                {calculator.title}
-              </h3>
+                {/* Title */}
+                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-teal-400 transition-colors leading-tight">
+                  {calculator.title}
+                </h3>
 
-              {/* Description */}
-              <p className="text-slate-300 mb-6 leading-relaxed min-h-[96px]">
-                {calculator.description}
-              </p>
+                {/* Description */}
+                <p className="text-slate-300 mb-6 leading-relaxed min-h-[96px] text-[15px]">
+                  {calculator.description}
+                </p>
 
-              {/* CTA Button */}
-              <div className="flex items-center text-teal-400 font-semibold group-hover:text-teal-300 transition-colors">
-                <span>{calculator.cta}</span>
-                <svg
-                  className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </div>
+                {/* CTA Button */}
+                <div className="flex items-center text-teal-400 font-semibold group-hover:text-teal-300 transition-colors text-sm">
+                  <span>{calculator.cta}</span>
+                  <svg
+                    className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </div>
 
-              {/* Hover Gradient Effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/0 to-purple-500/0 group-hover:from-teal-500/5 group-hover:to-purple-500/5 transition-all duration-300 pointer-events-none" />
-            </Link>
-          ))}
+                {/* Hover Gradient Effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/0 to-purple-500/0 group-hover:from-teal-500/8 group-hover:to-purple-500/8 transition-all duration-300 pointer-events-none" />
+              </Link>
+            );
+          })}
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
 
       {/* Bottom CTA Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 text-center">
