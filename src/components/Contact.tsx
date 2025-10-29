@@ -55,6 +55,10 @@ export default function Contact() {
           }
         })
 
+        console.log('Response status:', response.status)
+        const responseData = await response.json()
+        console.log('Response data:', responseData)
+
         if (response.ok) {
           alert('Inquiry Received!\n\nWe review all submissions personally. Expect contact within 24 hours.')
           // Reset form
@@ -71,11 +75,13 @@ export default function Contact() {
           })
           setIsSubmitted(false)
         } else {
-          throw new Error('Form submission failed')
+          console.error('Form submission failed:', responseData)
+          alert(`Error: ${responseData.error || 'Form submission failed. Please try again.'}`)
+          setIsSubmitted(false)
         }
       } catch (error) {
         console.error('Form submission error:', error)
-        alert('Error submitting form. Please try again.')
+        alert('Error submitting form. Please check console and try again.')
         setIsSubmitted(false)
       }
     }
