@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Search, Clock, Settings, TrendingUp, LineChart, Users } from 'lucide-react';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Payment Intelligence Calculators | Crude Capital',
@@ -53,7 +55,9 @@ const calculators = [
 
 export default function ToolsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-purple-500/10" />
@@ -172,6 +176,8 @@ export default function ToolsPage() {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
