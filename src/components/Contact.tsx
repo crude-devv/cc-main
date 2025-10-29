@@ -39,15 +39,40 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (validateForm()) {
       setIsSubmitted(true)
-      // Handle form submission here
-      console.log('Form submitted:', formData)
-      // Show success message
-      setTimeout(() => {
-        alert('Consultation booked! Check your email for confirmation.')
-      }, 500)
+
+      // Submit to Netlify Forms
+      const myForm = e.target as HTMLFormElement
+      const formData = new FormData(myForm)
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
+      })
+        .then(() => {
+          alert('Consultation booked! Check your email for confirmation.')
+          // Reset form
+          setFormData({
+            businessName: '',
+            volume: '',
+            primaryGoal: '',
+            name: '',
+            email: '',
+            phone: '',
+            provider: '',
+            additionalInterests: '',
+            context: ''
+          })
+          setIsSubmitted(false)
+        })
+        .catch(error => {
+          alert('Error submitting form. Please try again.')
+          setIsSubmitted(false)
+          console.error(error)
+        })
     }
   }
 
@@ -61,11 +86,29 @@ export default function Contact() {
           </p>
         </div>
 
+        {/* Hidden form for Netlify to detect at build time */}
+        <form name="contact" netlify="true" netlify-honeypot="bot-field" hidden>
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+          <input type="tel" name="phone" />
+          <input type="text" name="businessName" />
+          <select name="volume">
+            <option value="150k-300k">£150K-£300K</option>
+          </select>
+          <select name="primaryGoal">
+            <option value="settlement-speed">Settlement speed</option>
+          </select>
+          <input type="text" name="provider" />
+          <input type="text" name="additionalInterests" />
+          <textarea name="context"></textarea>
+        </form>
+
         <div className="max-w-2xl mx-auto">
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-100">
-            <form onSubmit={handleSubmit} className="contact-form">
+            <form name="contact" method="POST" onSubmit={handleSubmit} className="contact-form">
+              <input type="hidden" name="form-name" value="contact" />
               <div className="space-y-6">
-                
+
                 {/* 1. Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -74,6 +117,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                     className={`w-full px-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200`}
@@ -90,6 +134,7 @@ export default function Contact() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                     className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200`}
@@ -106,6 +151,7 @@ export default function Contact() {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200"
@@ -122,6 +168,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="businessName"
+                    name="businessName"
                     value={formData.businessName}
                     onChange={(e) => setFormData(prev => ({ ...prev, businessName: e.target.value }))}
                     className={`w-full px-4 py-3 border ${errors.businessName ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200`}
@@ -137,6 +184,7 @@ export default function Contact() {
                   </label>
                   <select
                     id="volume"
+                    name="volume"
                     value={formData.volume}
                     onChange={(e) => setFormData(prev => ({ ...prev, volume: e.target.value }))}
                     className={`w-full px-4 py-3 border ${errors.volume ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200`}
@@ -158,6 +206,7 @@ export default function Contact() {
                   </label>
                   <select
                     id="primaryGoal"
+                    name="primaryGoal"
                     value={formData.primaryGoal}
                     onChange={(e) => setFormData(prev => ({ ...prev, primaryGoal: e.target.value }))}
                     className={`w-full px-4 py-3 border ${errors.primaryGoal ? 'border-red-500' : 'border-gray-300'} rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200`}
@@ -181,6 +230,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="provider"
+                    name="provider"
                     value={formData.provider}
                     onChange={(e) => setFormData(prev => ({ ...prev, provider: e.target.value }))}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200"
@@ -197,6 +247,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="additionalInterests"
+                    name="additionalInterests"
                     value={formData.additionalInterests}
                     onChange={(e) => setFormData(prev => ({ ...prev, additionalInterests: e.target.value }))}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-200"
@@ -212,6 +263,7 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="context"
+                    name="context"
                     rows={4}
                     value={formData.context}
                     onChange={(e) => setFormData(prev => ({ ...prev, context: e.target.value }))}
