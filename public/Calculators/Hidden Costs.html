@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCO & Switching ROI Calculator | Crude Capital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-dark: #111827; --color-light: #F9FAFB; --color-slate-600: #475569;
+            --color-slate-400: #94A3B8; --color-slate-200: #E2E8F0; --color-accent: #14B8A6;
+            --color-accent-dark: #0F766E; --color-contrast: #F59E0B; --color-contrast-dark: #B45309;
+            --font-heading: 'Sora', sans-serif; --font-body: 'Inter', sans-serif;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--color-light); color: var(--color-slate-600); padding: 2rem 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: var(--shadow-lg); overflow: hidden; border: 1px solid var(--color-slate-200); }
+        .main-grid { display: grid; grid-template-columns: 1fr 1.1fr; }
+        .hero { padding: 4rem; text-align: center; background: var(--color-dark); }
+        .hero h1 { font-family: var(--font-heading); color: white; font-size: clamp(2.5rem, 5vw, 3.25rem); line-height: 1.1; margin-bottom: 1rem; }
+        .hero h1 .highlight { color: var(--color-contrast); }
+        .hero p { font-size: clamp(1rem, 2vw, 1.1rem); max-width: 700px; margin: 0 auto; color: var(--color-slate-400); line-height: 1.6; }
+        .input-panel { padding: 3rem; background-color: var(--color-light); border-right: 1px solid var(--color-slate-200); }
+        .input-panel h2 { font-family: var(--font-heading); color: var(--color-dark); font-size: 1.75rem; margin-bottom: 2.5rem; }
+        .form-group { margin-bottom: 2.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.75rem; color: var(--color-dark); }
+        .form-group select, .form-group input { width: 100%; padding: 1rem; border: 1px solid var(--color-slate-200); border-radius: 12px; font-size: 1rem; }
+        .results-panel { padding: 3rem; background-color: white; }
+        .results-panel h2 { font-family: var(--font-heading); color: var(--color-dark); font-size: 1.75rem; text-align: center; margin-bottom: 2rem; }
+        .tco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+        .tco-card { border-radius: 16px; padding: 1.5rem; border: 2px solid var(--color-slate-200); }
+        .tco-card.dojo { border-color: var(--color-accent); }
+        .tco-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+        .tco-card ul { list-style: none; margin-bottom: 1.5rem; }
+        .tco-card li { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.75rem 0; border-bottom: 1px solid var(--color-slate-200); }
+        .tco-card li.hidden-cost span:first-child { color: var(--color-contrast-dark); }
+        .tco-card .total { font-weight: 700; font-size: 1.1rem; padding-top: 1rem; border-top: 2px solid var(--color-dark); }
+        .impact-section { background-color: var(--color-dark); color: white; padding: 2.5rem; border-radius: 16px; text-align: center; }
+        .impact-section h3 { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-slate-200); margin-bottom: 0.5rem; }
+        .impact-number { font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 700; color: var(--color-accent); line-height: 1.1; margin-bottom: 1rem; }
+        .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+        .roi-card { background-color: var(--color-slate-600); border-radius: 12px; padding: 1rem; }
+        .roi-card h4 { font-size: 1rem; color: var(--color-slate-300); }
+        .roi-value { font-size: 2rem; font-family: var(--font-heading); color: white; }
+        .tooltip { cursor: help; border-bottom: 1px dotted; }
+        @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
+        @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel { padding: 2rem 1.5rem; } .tco-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Is Your "Low Rate" <br>a <span class="highlight">High-Cost Illusion?</span></h1>
+            <p>Transaction rates are just the tip of the iceberg. Discover the true cost of your current payment provider by quantifying the hidden fees, risks, and inefficiencies that drain your profit.</p>
+        </header>
+        <main class="main-grid">
+            <div class="input-panel">
+                <h2>Your Current Setup</h2>
+                <div class="form-group">
+                    <label for="current-provider">Current Payment Provider</label>
+                    <select id="current-provider">
+                        <option value="WorldPay">WorldPay / Tyl</option>
+                        <option value="Square">Square</option>
+                        <option value="SumUp">SumUp</option>
+                        <option value="Zettle">Zettle (PayPal)</option>
+                        <option value="Other">Other Bank / Provider</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="monthly-volume">Average Monthly Card Volume (£)</label>
+                    <input type="number" id="monthly-volume" value="25000" step="1000">
+                </div>
+                <div class="form-group">
+                    <label for="transaction-rate">Your Blended Transaction Rate (%)</label>
+                    <input type="number" id="transaction-rate" value="1.5" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="rental-fee">Monthly Terminal Rental Fee (£)</label>
+                    <input type="number" id="rental-fee" value="25" step="1">
+                </div>
+            </div>
+            <div class="results-panel">
+                <h2>True Cost of Ownership (TCO) Analysis</h2>
+                <div class="tco-grid">
+                    <div class="tco-card">
+                        <h3 id="competitor-name">Your Provider</h3>
+                        <ul>
+                            <li><span>Transaction Fees</span> <span id="comp-fee-cost">£0</span></li>
+                            <li><span>Hardware Fees</span> <span id="comp-rental-cost">£0</span></li>
+                            <li class="hidden-cost"><span><span class="tooltip">Delayed Capital Cost ⓘ</span></span> <span id="comp-capital-cost">£0</span></li>
+                            <li class="hidden-cost"><span><span class="tooltip">PCI Compliance Cost ⓘ</span></span> <span id="comp-pci-cost">£0</span></li>
+                            <li class="hidden-cost"><span><span class="tooltip">Downtime Risk Cost ⓘ</span></span> <span id="comp-downtime-cost">£0</span></li>
+                            <li class="hidden-cost"><span><span class="tooltip">Wasted Support Time ⓘ</span></span> <span id="comp-support-cost">£0</span></li>
+                            <li class="total"><span>Annual TCO</span> <span id="comp-total-cost">£0</span></li>
+                        </ul>
+                    </div>
+                    <div class="tco-card dojo">
+                        <h3>Crude Capital Merchants</h3>
+                        <ul>
+                            <li><span>Transaction Fees</span> <span id="dojo-fee-cost">£0</span></li>
+                            <li><span>Hardware Fees</span> <span id="dojo-rental-cost">£0</span></li>
+                            <li><span>Delayed Capital Cost</span> <span>£0</span></li>
+                            <li><span>PCI Compliance Cost</span> <span>£0</span></li>
+                            <li><span>Downtime Risk Cost</span> <span id="dojo-downtime-cost">£0</span></li>
+                            <li><span>Wasted Support Time</span> <span id="dojo-support-cost">£0</span></li>
+                            <li class="total"><span>Annual TCO</span> <span id="dojo-total-cost">£0</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="impact-section">
+                    <h3>Your Potential Annual Savings</h3>
+                    <div class="impact-number" id="annual-savings">£0</div>
+                    <div class="roi-grid">
+                        <div class="roi-card">
+                            <h4>First-Year Switching ROI</h4>
+                            <div class="roi-value" id="switching-roi">0%</div>
+                        </div>
+                        <div class="roi-card">
+                            <h4>Includes Exit Fee Buyout</h4>
+                            <div class="roi-value" id="exit-fee-buyout">£3,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="impact-section" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; text-align: center;">
+                    <h3 style="color: white; margin-bottom: 16px; font-size: 24px;">Get Your Detailed TCO & Switching Analysis</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 24px; font-size: 16px;">
+                        Receive a comprehensive breakdown of your potential savings and a personalized implementation roadmap.
+                    </p>
+                    <form id="cta-form" class="cta-form" action="https://formspree.io/f/xblpyjlw" method="POST" style="max-width: 500px; margin: 0 auto;">
+                        <input type="hidden" name="calculator" value="Hidden Costs & TCO Engine">
+                        <input type="hidden" name="calendly" value="https://calendly.com/crude-capital-info/30min">
+                        <input type="hidden" id="calculation-results" name="results" value="">
+                        <div style="display: flex; gap: 12px; flex-direction: column; align-items: center;">
+                            <input
+                                type="email"
+                                id="prospect-email"
+                                name="email"
+                                placeholder="Enter your business email"
+                                required
+                                style="padding: 14px 20px; border-radius: 8px; border: none; width: 100%; max-width: 400px; font-size: 16px;"
+                            >
+                            <button
+                                type="submit"
+                                id="cta-button"
+                                class="cta-button"
+                                disabled
+                                style="padding: 14px 32px; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; width: 100%; max-width: 400px;"
+                            >
+                                Get Your Detailed Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = {
+            provider: document.getElementById('current-provider'),
+            monthlyVolume: document.getElementById('monthly-volume'),
+            txRate: document.getElementById('transaction-rate'),
+            rentalFee: document.getElementById('rental-fee'),
+            competitorName: document.getElementById('competitor-name'),
+            compFeeCost: document.getElementById('comp-fee-cost'),
+            compRentalCost: document.getElementById('comp-rental-cost'),
+            compCapitalCost: document.getElementById('comp-capital-cost'),
+            compPciCost: document.getElementById('comp-pci-cost'),
+            compDowntimeCost: document.getElementById('comp-downtime-cost'),
+            compSupportCost: document.getElementById('comp-support-cost'),
+            compTotalCost: document.getElementById('comp-total-cost'),
+            dojoFeeCost: document.getElementById('dojo-fee-cost'),
+            dojoRentalCost: document.getElementById('dojo-rental-cost'),
+            dojoDowntimeCost: document.getElementById('dojo-downtime-cost'),
+            dojoSupportCost: document.getElementById('dojo-support-cost'),
+            dojoTotalCost: document.getElementById('dojo-total-cost'),
+            annualSavings: document.getElementById('annual-savings'),
+            switchingRoi: document.getElementById('switching-roi'),
+            exitFeeBuyout: document.getElementById('exit-fee-buyout')
+        };
+
+        const COMPETITOR_PROFILES = {
+            'WorldPay': { name: 'WorldPay', settlementDays: 3, pciFee: 120, downtimeRisk: 0.001, supportMultiplier: 4 },
+            'Square': { name: 'Square', settlementDays: 2, pciFee: 0, downtimeRisk: 0.002, supportMultiplier: 3 },
+            'SumUp': { name: 'SumUp', settlementDays: 2, pciFee: 0, downtimeRisk: 0.0025, supportMultiplier: 3.5 },
+            'Zettle': { name: 'Zettle', settlementDays: 2, pciFee: 0, downtimeRisk: 0.002, supportMultiplier: 3.5 },
+            'Other': { name: 'Other Provider', settlementDays: 3, pciFee: 100, downtimeRisk: 0.0015, supportMultiplier: 4 }
+        };
+        const DOJO_PROFILE = { rate: 0.012, rentalFee: 20, pciFee: 0, downtimeRisk: 0.0001, supportMultiplier: 1, settlementDays: 1, exitFeeBuyout: 3000 };
+        const TCO_MODEL = { opportunityCostRate: 0.05, supportHoursPerYear: 10, supportStaffWage: 25 };
+
+        const formatCurrency = (value) => `£${Math.round(value).toLocaleString()}`;
+        
+        const calculateAndDisplay = () => {
+            const providerKey = elements.provider.value;
+            const competitor = COMPETITOR_PROFILES[providerKey];
+            const monthlyVolume = parseFloat(elements.monthlyVolume.value);
+            const annualVolume = monthlyVolume * 12;
+            const userRate = parseFloat(elements.txRate.value) / 100;
+            const userRental = parseFloat(elements.rentalFee.value);
+
+            elements.competitorName.textContent = competitor.name;
+
+            // Competitor TCO
+            const compFeeCost = annualVolume * userRate;
+            const compRentalCost = userRental * 12;
+            const compCapitalCost = (annualVolume / 365) * (competitor.settlementDays - 1) * TCO_MODEL.opportunityCostRate * 365;
+            const compPciCost = competitor.pciFee;
+            const compDowntimeCost = annualVolume * competitor.downtimeRisk;
+            const compSupportCost = (TCO_MODEL.supportHoursPerYear * competitor.supportMultiplier) * TCO_MODEL.supportStaffWage;
+            const compTotalCost = compFeeCost + compRentalCost + compCapitalCost + compPciCost + compDowntimeCost + compSupportCost;
+
+            // Dojo TCO
+            const dojoFeeCost = annualVolume * DOJO_PROFILE.rate;
+            const dojoRentalCost = DOJO_PROFILE.rentalFee * 12;
+            const dojoDowntimeCost = annualVolume * DOJO_PROFILE.downtimeRisk;
+            const dojoSupportCost = (TCO_MODEL.supportHoursPerYear * DOJO_PROFILE.supportMultiplier) * TCO_MODEL.supportStaffWage;
+            const dojoTotalCost = dojoFeeCost + dojoRentalCost + dojoDowntimeCost + dojoSupportCost;
+
+            // Display Competitor Costs
+            elements.compFeeCost.textContent = formatCurrency(compFeeCost);
+            elements.compRentalCost.textContent = formatCurrency(compRentalCost);
+            elements.compCapitalCost.textContent = formatCurrency(compCapitalCost);
+            elements.compPciCost.textContent = formatCurrency(compPciCost);
+            elements.compDowntimeCost.textContent = formatCurrency(compDowntimeCost);
+            elements.compSupportCost.textContent = formatCurrency(compSupportCost);
+            elements.compTotalCost.textContent = formatCurrency(compTotalCost);
+
+            // Display Dojo Costs
+            elements.dojoFeeCost.textContent = formatCurrency(dojoFeeCost);
+            elements.dojoRentalCost.textContent = formatCurrency(dojoRentalCost);
+            elements.dojoDowntimeCost.textContent = formatCurrency(dojoDowntimeCost);
+            elements.dojoSupportCost.textContent = formatCurrency(dojoSupportCost);
+            elements.dojoTotalCost.textContent = formatCurrency(dojoTotalCost);
+
+            // Display Savings & ROI
+            const annualSavings = compTotalCost - dojoTotalCost;
+            const firstYearValue = annualSavings + DOJO_PROFILE.exitFeeBuyout;
+            const dojoFirstYearCost = dojoRentalCost; // Assuming first year cost is just hardware rental
+            const switchingRoi = (dojoFirstYearCost > 0) ? (firstYearValue / dojoFirstYearCost) * 100 : 0;
+            
+            elements.annualSavings.textContent = formatCurrency(annualSavings);
+            elements.switchingRoi.textContent = `${Math.round(switchingRoi)}%`;
+            elements.exitFeeBuyout.textContent = formatCurrency(DOJO_PROFILE.exitFeeBuyout);
+
+            // Update CTA with calculation results
+            const resultsText = `
+Hidden Costs & TCO Analysis Results:
+
+Current Provider: ${elements.provider.value}
+Monthly Volume: £${parseFloat(elements.monthlyVolume.value).toLocaleString('en-GB')}
+
+Your Current Total Cost of Ownership (Annual):
+- Transaction Fees: ${elements.compFeeCost.textContent}
+- Hardware/Rental Fees: ${elements.compRentalCost.textContent}
+- Delayed Capital Cost: ${elements.compCapitalCost.textContent}
+- PCI Compliance Cost: ${elements.compPciCost.textContent}
+- Downtime Risk Cost: ${elements.compDowntimeCost.textContent}
+- Support Time Waste: ${elements.compSupportCost.textContent}
+TOTAL ANNUAL TCO: ${elements.compTotalCost.textContent}
+
+CCM Solution Total Cost of Ownership (Annual):
+- Transaction Fees: ${elements.dojoFeeCost.textContent}
+- Hardware Fees: ${elements.dojoRentalCost.textContent}
+- All other costs: £0 (99.99% uptime, instant settlement, PCI included)
+TOTAL ANNUAL TCO: ${elements.dojoTotalCost.textContent}
+
+YOUR POTENTIAL ANNUAL SAVINGS: ${formatCurrency(annualSavings)}
+First-Year Switching ROI: ${Math.round(switchingRoi)}%
+Includes Exit Fee Buyout: ${formatCurrency(DOJO_PROFILE.exitFeeBuyout)}
+            `.trim();
+
+            const resultsInput = document.getElementById('calculation-results');
+            if (resultsInput) {
+                resultsInput.value = resultsText;
+            }
+
+            // Enable submit button if valid
+            const ctaButton = document.getElementById('cta-button');
+            const emailInput = document.getElementById('prospect-email');
+            if (ctaButton && emailInput && emailInput.value && emailInput.checkValidity()) {
+                ctaButton.disabled = false;
+            }
+        };
+
+        const allInputs = [elements.provider, elements.monthlyVolume, elements.txRate, elements.rentalFee];
+        allInputs.forEach(el => el.addEventListener('input', calculateAndDisplay));
+
+        calculateAndDisplay();
+
+        // Form submission handler
+        const ctaForm = document.getElementById('cta-form');
+        const emailInput = document.getElementById('prospect-email');
+
+        emailInput.addEventListener('input', () => {
+            const ctaButton = document.getElementById('cta-button');
+            ctaButton.disabled = !emailInput.checkValidity();
+        });
+
+        ctaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch(ctaForm.action, {
+                    method: 'POST',
+                    body: new FormData(ctaForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert('Report sent! Check your email for your detailed analysis and booking link.');
+                    ctaForm.reset();
+                    const ctaButton = document.getElementById('cta-button');
+                    ctaButton.disabled = true;
+                } else {
+                    alert('Error sending report. Please try again.');
+                }
+            } catch (error) {
+                alert('Error sending report. Please try again.');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

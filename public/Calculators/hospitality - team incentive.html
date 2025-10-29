@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Performance & Profitability Calculator | Crude Capital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-dark: #111827; --color-light: #F9FAFB; --color-slate-600: #475569;
+            --color-slate-400: #94A3B8; --color-slate-200: #E2E8F0; --color-accent: #14B8A6;
+            --color-accent-dark: #0F766E; --color-contrast: #3B82F6; --color-contrast-dark: #1D4ED8; /* Blue for team */
+            --font-heading: 'Sora', sans-serif; --font-body: 'Inter', sans-serif;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--color-light); color: var(--color-slate-600); padding: 2rem 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: var(--shadow-lg); overflow: hidden; border: 1px solid var(--color-slate-200); }
+        .main-grid { display: grid; grid-template-columns: 1fr 1.1fr; }
+        .hero { padding: 4rem; text-align: center; background: var(--color-dark); }
+        .hero h1 { font-family: var(--font-heading); color: white; font-size: clamp(2.5rem, 5vw, 3.25rem); line-height: 1.1; margin-bottom: 1rem; }
+        .hero h1 .highlight { color: var(--color-contrast); }
+        .hero p { font-size: clamp(1rem, 2vw, 1.1rem); max-width: 700px; margin: 0 auto; color: var(--color-slate-400); line-height: 1.6; }
+        .input-panel { padding: 3rem; background-color: var(--color-light); border-right: 1px solid var(--color-slate-200); }
+        .input-panel h2 { font-family: var(--font-heading); color: var(--color-dark); font-size: 1.75rem; margin-bottom: 2.5rem; }
+        .slider-group { margin-bottom: 2.5rem; }
+        .slider-label-container { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+        .slider-label { font-size: 1rem; font-weight: 600; color: var(--color-dark); }
+        .slider-value { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 600; color: var(--color-accent); }
+        input[type="range"] { -webkit-appearance: none; width: 100%; height: 8px; background: var(--color-slate-200); border-radius: 5px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: white; border-radius: 50%; border: 5px solid var(--color-accent); cursor: pointer; margin-top: -8px; }
+        .results-panel { padding: 3rem; background-color: white; }
+        .results-panel h2 { font-family: var(--font-heading); color: var(--color-dark); font-size: 1.75rem; text-align: center; margin-bottom: 2rem; }
+        .impact-section { background-color: var(--color-dark); color: white; padding: 2.5rem; border-radius: 16px; text-align: center; margin-bottom: 2.5rem; }
+        .impact-section h3 { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-slate-200); margin-bottom: 0.5rem; }
+        .impact-number { font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 700; color: var(--color-contrast); line-height: 1.1; margin-bottom: 1rem; }
+        .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .breakdown-card { background-color: var(--color-light); border-radius: 16px; padding: 1.5rem; text-align: center; border: 1px solid var(--color-slate-200); }
+        .breakdown-card h4 { font-size: 1rem; font-weight: 600; color: var(--color-dark); margin-bottom: 0.75rem; }
+        .breakdown-value { font-family: var(--font-heading); font-size: clamp(1.75rem, 5vw, 2.25rem); font-weight: 700; color: var(--color-accent-dark); line-height: 1; }
+        .breakdown-card p { font-size: 0.875rem; color: var(--color-slate-600); margin-top: 0.75rem; }
+        .cta-section { background: linear-gradient(135deg, var(--color-contrast), var(--color-contrast-dark)); padding: 2.5rem; border-radius: 16px; text-align: center; }
+        .cta-section h3 { font-family: var(--font-heading); font-size: 1.75rem; color: white; margin-bottom: 1.5rem; }
+        .cta-button { background: white; color: var(--color-contrast-dark); padding: 1rem 2.5rem; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+        .tooltip { position: relative; display: inline-flex; align-items: center; cursor: help; border-bottom: 1px dotted; }
+        .tooltip-text { visibility: hidden; width: 250px; background-color: var(--color-dark); color: #fff; text-align: left; border-radius: 6px; padding: 10px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -125px; opacity: 0; transition: opacity 0.3s; }
+        .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
+        @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel { padding: 2rem 1.5rem; } .breakdown-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Your Team is Your Biggest Asset. <br><span class="highlight">Are You Investing in Them?</span></h1>
+            <p>In a competitive hiring market, staff retention is your superpower. Discover how a smarter payment system can boost team earnings, reduce turnover, and save you thousands in hiring costs.</p>
+        </header>
+        <main class="main-grid">
+            <div class="input-panel">
+                <h2>Your Team's Profile</h2>
+                <div class="slider-group">
+                    <label class="slider-label">Number of Front-of-House Staff</label>
+                    <div class="slider-label-container">
+                        <input type="range" id="staff-count" min="2" max="50" value="10" style="width: 80%;">
+                        <div id="staff-count-display" class="slider-value">10</div>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label class="slider-label">Average Weekly Tips per Employee</label>
+                    <div class="slider-label-container">
+                        <input type="range" id="weekly-tips" min="10" max="500" step="10" value="120" style="width: 80%;">
+                        <div id="weekly-tips-display" class="slider-value">£120</div>
+                    </div>
+                </div>
+                 <div class="slider-group">
+                    <label class="slider-label">Average Staff Hourly Wage</label>
+                    <div class="slider-label-container">
+                        <input type="range" id="hourly-wage" min="8" max="20" step="0.5" value="11.5" style="width: 80%;">
+                        <div id="hourly-wage-display" class="slider-value">£11.50</div>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label class="slider-label">Annual Staff Turnover Rate</label>
+                    <div class="slider-label-container">
+                        <input type="range" id="turnover-rate" min="10" max="150" step="5" value="75" style="width: 80%;">
+                        <div id="turnover-rate-display" class="slider-value">75%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="results-panel">
+                <h2>Your Team Performance Blueprint</h2>
+                <div class="impact-section">
+                    <h3>Total Annual Value Unlocked for Your Business</h3>
+                    <div class="impact-number" id="total-value">£0</div>
+                    <p>This is the total estimated annual savings from reduced staff turnover and recaptured operational hours.</p>
+                </div>
+                <h3 style="text-align: center; font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 1.5rem;">The Two-Fold Benefit</h3>
+                <div class="breakdown-grid">
+                    <div class="breakdown-card">
+                        <h4>To Your Team <span class="tooltip">ⓘ<span class="tooltip-text">Based on case studies like NQ64, which saw a 3,000% increase in tips. We use a conservative model to estimate the potential uplift in your team's earnings.</span></span></h4>
+                        <div class="breakdown-value" id="tip-uplift">£0</div>
+                        <p>Additional annual tips, boosting take-home pay at no cost to you.</p>
+                    </div>
+                    <div class="breakdown-card">
+                        <h4>To Your Bottom Line <span class="tooltip">ⓘ<span class="tooltip-text">Calculated from reducing turnover costs (hiring, training) and saving labor hours on daily admin tasks like cashing up.</span></span></h4>
+                        <div class="breakdown-value" id="business-savings">£0</div>
+                        <p>Direct annual savings from retaining staff and improving efficiency.</p>
+                    </div>
+                </div>
+                <div class="cta-section">
+                    <h3>Become an Employer of Choice.</h3>
+                    <p>Ready to build a more stable, motivated, and profitable team? Get your detailed report.</p>
+                    <form id="cta-form" class="cta-form" action="https://formspree.io/f/xblpyjlw" method="POST" style="display: flex; gap: 1rem; max-width: 500px; margin: 2rem auto;">
+                        <input type="hidden" name="calculator" value="Team Performance & Profitability">
+                        <input type="hidden" name="calendly" value="https://calendly.com/crude-capital-info/30min">
+                        <input type="hidden" id="calculation-results" name="results" value="">
+                        <input type="email" id="prospect-email" name="email" placeholder="Enter your business email" required style="flex-grow: 1; padding: 1rem; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem;">
+                        <button type="submit" class="cta-button" style="white-space: nowrap;">Get Your Detailed Report</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = {
+            staffCount: document.getElementById('staff-count'),
+            staffCountDisplay: document.getElementById('staff-count-display'),
+            weeklyTips: document.getElementById('weekly-tips'),
+            weeklyTipsDisplay: document.getElementById('weekly-tips-display'),
+            hourlyWage: document.getElementById('hourly-wage'),
+            hourlyWageDisplay: document.getElementById('hourly-wage-display'),
+            turnoverRate: document.getElementById('turnover-rate'),
+            turnoverRateDisplay: document.getElementById('turnover-rate-display'),
+            totalValue: document.getElementById('total-value'),
+            tipUplift: document.getElementById('tip-uplift'),
+            businessSavings: document.getElementById('business-savings'),
+            ctaLink: document.getElementById('cta-link')
+        };
+
+        const HR_FINANCIAL_MODEL = {
+            tipUpliftPercentage: 0.75,
+            costToReplaceEmployee: 2500,
+            turnoverReductionFactor: 0.5,
+            dailyReconHoursBefore: 0.75,
+            dailyReconHoursAfter: 0.15
+        };
+
+        let lastCalculated = {};
+
+        const animateValue = (obj, start, end, duration, prefix = '£', decimals = 0) => {
+            if (!obj || isNaN(start) || isNaN(end)) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!document.body.contains(obj)) return;
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const val = progress * (end - start) + start;
+                obj.innerHTML = `${prefix}${val.toLocaleString('en-GB', {minimumFractionDigits: decimals, maximumFractionDigits: decimals})}`;
+                if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerHTML = `${prefix}${end.toLocaleString('en-GB', {minimumFractionDigits: decimals, maximumFractionDigits: decimals})}`;
+            };
+            window.requestAnimationFrame(step);
+        };
+        
+        const calculateAndDisplay = () => {
+            const numStaff = parseFloat(elements.staffCount.value);
+            const weeklyTipsPerEmployee = parseFloat(elements.weeklyTips.value);
+            const avgHourlyWage = parseFloat(elements.hourlyWage.value);
+            const currentTurnoverRate = parseFloat(elements.turnoverRate.value);
+
+            // Tip Uplift Calculation
+            const currentAnnualTips = weeklyTipsPerEmployee * numStaff * 52;
+            const totalTipUplift = currentAnnualTips * HR_FINANCIAL_MODEL.tipUpliftPercentage;
+            const avgAnnualPay = avgHourlyWage * 40 * 52;
+            const avgPayIncreasePercent = (totalTipUplift / numStaff) / avgAnnualPay;
+
+            // Turnover Savings Calculation
+            const turnoverReductionPercent = avgPayIncreasePercent * 100 * HR_FINANCIAL_MODEL.turnoverReductionFactor;
+            const staffTurnoverCount = numStaff * (currentTurnoverRate / 100);
+            const retainedStaffCount = staffTurnoverCount * (turnoverReductionPercent / 100);
+            const turnoverSavings = retainedStaffCount * HR_FINANCIAL_MODEL.costToReplaceEmployee;
+
+            // Efficiency Savings Calculation
+            const hoursSavedPerDay = (HR_FINANCIAL_MODEL.dailyReconHoursBefore - HR_FINANCIAL_MODEL.dailyReconHoursAfter) * Math.ceil(numStaff / 5);
+            const efficiencySavings = hoursSavedPerDay * 312 * avgHourlyWage; // 6 days/week * 52 weeks
+
+            const totalBusinessValue = turnoverSavings + efficiencySavings;
+
+            animateValue(elements.totalValue, lastCalculated.total || 0, totalBusinessValue, 800);
+            animateValue(elements.tipUplift, lastCalculated.tips || 0, totalTipUplift, 700);
+            animateValue(elements.businessSavings, lastCalculated.savings || 0, totalBusinessValue, 700);
+
+            lastCalculated = { total: totalBusinessValue, tips: totalTipUplift, savings: totalBusinessValue };
+            updateCtaLink({totalBusinessValue, totalTipUplift});
+        };
+
+        const updateDisplays = () => {
+            elements.staffCountDisplay.textContent = elements.staffCount.value;
+            elements.weeklyTipsDisplay.textContent = `£${elements.weeklyTips.value}`;
+            elements.hourlyWageDisplay.textContent = `£${parseFloat(elements.hourlyWage.value).toFixed(2)}`;
+            elements.turnoverRateDisplay.textContent = `${elements.turnoverRate.value}%`;
+        };
+
+        const updateCtaLink = (results) => {
+            const subject = "My Team Performance & Profitability Blueprint";
+            const body = `
+Hello Crude Capital Team,
+
+I've used the Team Performance calculator and I'm interested in learning more about how your system can impact my business. Here is my blueprint:
+
+--- TEAM PERFORMANCE REPORT ---
+
+Team Size: ${elements.staffCount.value} FOH Staff
+Current Annual Turnover: ${elements.turnoverRate.value}%
+Weekly Tips Per Server: £${elements.weeklyTips.value}
+Hourly Wage: £${elements.hourlyWage.value}
+
+RESULTS:
+Additional Annual Tips for Team: £${Math.round(results.totalTipUplift).toLocaleString()}
+Total Annual Business Savings: £${Math.round(results.totalBusinessValue).toLocaleString()}
+            `.trim();
+
+            // Populate hidden results field
+            const resultsInput = document.getElementById('calculation-results');
+            if (resultsInput) {
+                resultsInput.value = body;
+            }
+        };
+
+        const allInputs = [elements.staffCount, elements.weeklyTips, elements.hourlyWage, elements.turnoverRate];
+        allInputs.forEach(el => el.addEventListener('input', () => {
+            updateDisplays();
+            calculateAndDisplay();
+        }));
+
+        // Form submission handler
+        const ctaForm = document.getElementById('cta-form');
+        ctaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch(ctaForm.action, {
+                    method: 'POST',
+                    body: new FormData(ctaForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert('Report sent! Check your email for your detailed analysis and booking link.');
+                    ctaForm.reset();
+                } else {
+                    alert('Error sending report. Please try again.');
+                }
+            } catch (error) {
+                alert('Error sending report. Please try again.');
+            }
+        });
+
+        // Initial Load
+        updateDisplays();
+        calculateAndDisplay();
+    });
+    </script>
+</body>
+</html>
