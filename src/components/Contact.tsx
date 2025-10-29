@@ -86,23 +86,6 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Hidden form for Netlify to detect at build time */}
-        <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-          <input type="text" name="name" />
-          <input type="email" name="email" />
-          <input type="tel" name="phone" />
-          <input type="text" name="businessName" />
-          <select name="volume">
-            <option value="150k-300k">£150K-£300K</option>
-          </select>
-          <select name="primaryGoal">
-            <option value="settlement-speed">Settlement speed</option>
-          </select>
-          <input type="text" name="provider" />
-          <input type="text" name="additionalInterests" />
-          <textarea name="context"></textarea>
-        </form>
-
         <div className="max-w-2xl mx-auto">
           <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-100">
             <form name="contact" method="POST" onSubmit={handleSubmit} className="contact-form">
