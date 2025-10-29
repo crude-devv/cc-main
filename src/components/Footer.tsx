@@ -38,7 +38,7 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-4">PAYMENT INTELLIGENCE</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>
-                <a href="#intelligence" className="hover:text-white transition-colors">
+                <a href="https://crudecapital.substack.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Signal or Noise Newsletter
                 </a>
               </li>

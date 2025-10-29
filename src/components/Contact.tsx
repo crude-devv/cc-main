@@ -275,7 +275,7 @@ export default function Contact() {
                   className="bg-accent-700 text-white px-10 py-4 rounded-lg font-semibold text-lg hover:bg-accent-800 hover:-translate-y-1 transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{ fontSize: '16px' }}
                 >
-                  {isSubmitted ? 'Booking...' : 'Book Payments System Audit'}
+                  {isSubmitted ? 'Submitting...' : 'Book Consultation'}
                 </button>
               </div>
             </form>
@@ -286,16 +286,14 @@ export default function Contact() {
             <p className="text-gray-600 mb-4">
               Join our market intelligence brief for payment infrastructure insights and strategic guidance.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 bg-white"
-              />
-              <button className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors font-medium">
-                Subscribe
-              </button>
-            </div>
+            <a
+              href="https://crudecapital.substack.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-accent-700 text-white px-8 py-3 rounded-lg hover:bg-accent-800 transition-colors font-semibold"
+            >
+              Subscribe to Newsletter
+            </a>
           </div>
         </div>
       </div>
