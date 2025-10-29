@@ -47,11 +47,6 @@ export default function Footer() {
                   Payment Efficiency Calculator
                 </a>
               </li>
-              <li>
-                <a href="#intelligence" className="hover:text-white transition-colors">
-                  Market Analysis Archive
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -73,15 +68,15 @@ export default function Footer() {
                 <Mail size={16} className="mr-2" />
                 info@crude-capital.com
               </a>
-              <a 
-                href="tel:+447894561230" 
+              <a
+                href="tel:+442046039170"
                 className="flex items-center text-gray-400 hover:text-white transition-colors text-sm"
               >
                 <Phone size={16} className="mr-2" />
-                +44 7894 561 230
+                +44 204 603 91 70
               </a>
-              <a 
-                href="https://linkedin.com/company/crude-capital" 
+              <a
+                href="https://www.linkedin.com/company/crude-capital/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center text-gray-400 hover:text-white transition-colors text-sm"
@@ -96,7 +91,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2025 Crude Capital. Payment intelligence for competitive advantage.
+              © 2025 Crude Capital. Payment Intelligence for Competitive Advantage.
             </p>
             
             <div className="flex space-x-6 mt-4 md:mt-0">
