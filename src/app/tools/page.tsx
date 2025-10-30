@@ -57,16 +57,15 @@ export default function ToolsPage() {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-purple-500/10" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+      <div className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
               Payment Intelligence Calculators
             </h1>
-            <p className="text-xl sm:text-2xl text-slate-300 leading-relaxed">
+            <p className="text-xl sm:text-2xl text-gray-600 leading-relaxed">
               Quantify what you're leaving on the table. Then optimize strategic infrastructure to capture it.
             </p>
           </div>
@@ -82,26 +81,26 @@ export default function ToolsPage() {
               <Link
                 key={calculator.id}
                 href={`/tools/${calculator.id}`}
-                className="group relative bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:bg-slate-800 hover:border-teal-500/70 transition-all duration-300 hover:shadow-2xl hover:shadow-teal-500/30 hover:-translate-y-2 animate-fade-in"
+                className="group relative bg-white border border-gray-200 rounded-2xl p-8 hover:border-teal-500 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Icon with background */}
-                <div className="mb-6 w-16 h-16 rounded-xl bg-teal-500/10 flex items-center justify-center group-hover:bg-teal-500/20 group-hover:scale-110 transition-all duration-300">
-                  <IconComponent className="w-8 h-8 text-teal-400 group-hover:text-teal-300" strokeWidth={2} />
+                <div className="mb-6 w-16 h-16 rounded-xl bg-teal-50 flex items-center justify-center group-hover:bg-teal-100 group-hover:scale-110 transition-all duration-300">
+                  <IconComponent className="w-8 h-8 text-teal-600 group-hover:text-teal-700" strokeWidth={2} />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-teal-400 transition-colors leading-tight">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-600 transition-colors leading-tight">
                   {calculator.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-300 mb-6 leading-relaxed min-h-[96px] text-[15px]">
+                <p className="text-gray-600 mb-6 leading-relaxed min-h-[96px] text-[15px]">
                   {calculator.description}
                 </p>
 
                 {/* CTA Button */}
-                <div className="flex items-center text-teal-400 font-semibold group-hover:text-teal-300 transition-colors text-sm">
+                <div className="flex items-center text-teal-600 font-semibold group-hover:text-teal-700 transition-colors text-sm">
                   <span>{calculator.cta}</span>
                   <svg
                     className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"
@@ -117,9 +116,6 @@ export default function ToolsPage() {
                     />
                   </svg>
                 </div>
-
-                {/* Hover Gradient Effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/0 to-purple-500/0 group-hover:from-teal-500/8 group-hover:to-purple-500/8 transition-all duration-300 pointer-events-none" />
               </Link>
             );
           })}
@@ -146,18 +142,18 @@ export default function ToolsPage() {
 
       {/* Bottom CTA Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 text-center">
-        <div className="bg-gradient-to-r from-teal-500/10 to-purple-500/10 border border-teal-500/30 rounded-2xl p-8 sm:p-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+        <div className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-200 rounded-2xl p-8 sm:p-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
             Need Strategic Payment Infrastructure Analysis?
           </h2>
-          <p className="text-lg text-slate-300 mb-8">
+          <p className="text-lg text-gray-600 mb-8">
             Our calculators quantify specific inefficiencies. For comprehensive infrastructure optimization, book a consultation.
           </p>
           <Link
             href="https://calendly.com/crude-capital-info/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/50"
+            className="inline-flex items-center px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg"
           >
             Book Consultation
             <svg
