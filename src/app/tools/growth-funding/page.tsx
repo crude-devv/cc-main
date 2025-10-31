@@ -3,14 +3,15 @@ import Footer from '@/components/Footer';
 
 export default function GrowthFundingCalculator() {
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navigation />
-      <div style={{ width: '100%', minHeight: 'calc(100vh - 64px)' }}>
+      <div style={{ flex: '1', width: '100%', position: 'relative' }}>
         <iframe
           src="/calculators/growth_funding_engine.html"
           style={{
             width: '100%',
-            height: '100vh',
+            height: '100%',
+            minHeight: '800px',
             border: 'none',
             display: 'block',
           }}
@@ -18,6 +19,6 @@ export default function GrowthFundingCalculator() {
         />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
