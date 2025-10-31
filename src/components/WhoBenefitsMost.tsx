@@ -5,26 +5,26 @@ export default function WhoBenefitsMost() {
     {
       icon: ShoppingCart,
       category: 'High-Volume Retailers',
-      painPoint: 'Losing margin on slow settlements and unclear fees',
+      painPoint: 'Cash tied up for days while fees quietly erode your margins',
       color: 'from-blue-50 to-blue-100 border-blue-200'
     },
     {
       icon: Building2,
       category: 'Multi-Location Hospitality',
-      painPoint: 'No visibility across payment systems',
+      painPoint: 'Different terminals, different rates, different problems at every location',
       color: 'from-green-50 to-green-100 border-green-200'
     },
     {
       icon: Scissors,
       category: 'Service Businesses',
       subtext: 'Salons, Barbers, Beauty',
-      painPoint: 'Paying premium without knowing true costs',
+      painPoint: 'Premium rates locked in with contracts you signed years ago',
       color: 'from-purple-50 to-purple-100 border-purple-200'
     },
     {
       icon: Store,
       category: 'Independent Groceries',
-      painPoint: 'Locked into legacy systems and rigid contracts',
+      painPoint: 'Old equipment, inflexible terms, and rates that haven\'t improved in years',
       color: 'from-amber-50 to-amber-100 border-amber-200'
     }
   ]
@@ -35,7 +35,7 @@ export default function WhoBenefitsMost() {
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Who Benefits Most</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Specific businesses with specific payment challenges
+            UK Merchants who accept & process card payments In-Store
           </p>
         </div>
 
