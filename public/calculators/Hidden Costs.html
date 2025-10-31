@@ -125,11 +125,17 @@
 
                 <!-- CTA Section -->
                 <div class="impact-section" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; text-align: center;">
-                    <h3 style="color: white; margin-bottom: 16px; font-size: 24px;">Get Your Detailed TCO & Switching Analysis</h3>
-                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 24px; font-size: 16px;">
-                        Receive a comprehensive breakdown of your potential savings and a personalized implementation roadmap.
-                    </p>
-                    <form id="cta-form" class="cta-form" action="https://api.web3forms.com/submit" method="POST" style="max-width: 500px; margin: 0 auto;">
+                    <div id="success-message" style="display: none; background-color: #10B981; padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 1.5rem;">
+                        <h3 style="color: white; margin-bottom: 1rem; font-size: 1.5rem;">✓ Report Sent Successfully!</h3>
+                        <p style="color: white; font-size: 1rem; margin-bottom: 1rem;">Check your email for your detailed analysis.</p>
+                        <a href="https://calendly.com/crude-capital-consulting/30min" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: white; color: #10B981; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 0.5rem;">Book a Consultation</a>
+                    </div>
+                    <div id="form-container">
+                        <h3 style="color: white; margin-bottom: 16px; font-size: 24px;">Get Your Detailed TCO & Switching Analysis</h3>
+                        <p style="color: rgba(255,255,255,0.9); margin-bottom: 24px; font-size: 16px;">
+                            Receive a comprehensive breakdown of your potential savings and a personalized implementation roadmap.
+                        </p>
+                        <form id="cta-form" class="cta-form" action="https://api.web3forms.com/submit" method="POST" style="max-width: 500px; margin: 0 auto;">
                         <input type="hidden" name="access_key" value="9b04c636-7380-446b-9269-f2a283b02a81">
                         <input type="hidden" name="subject" value="New Submission: Hidden Costs & TCO Calculator">
                         <input type="hidden" name="from_name" value="Crude Capital Calculators">
@@ -155,9 +161,10 @@
                             </button>
                         </div>
                     </form>
-                    <p style="color: rgba(255,255,255,0.7); margin-top: 20px; font-size: 14px;">
-                        or <a href="https://calendly.com/crude-capital-consulting/30min" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; font-weight: 600;">Book a Consultation</a> to discuss your results with our team
-                    </p>
+                        <p style="color: rgba(255,255,255,0.7); margin-top: 20px; font-size: 14px;">
+                            or <a href="https://calendly.com/crude-capital-consulting/30min" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; font-weight: 600;">Book a Consultation</a> to discuss your results with our team
+                        </p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -306,10 +313,9 @@ YOUR POTENTIAL ANNUAL SAVINGS: ${formatCurrency(annualSavings)}
                     headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
-                    alert('Report sent! Check your email for your detailed analysis and booking link.');
+                    document.getElementById('form-container').style.display = 'none';
+                    document.getElementById('success-message').style.display = 'block';
                     ctaForm.reset();
-                    const ctaButton = document.getElementById('cta-button');
-                    ctaButton.disabled = true;
                 } else {
                     alert('Error sending report. Please try again.');
                 }
