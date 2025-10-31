@@ -43,7 +43,12 @@ export default function Process() {
       title: "Implementation & Optimization",
       content: "We deploy recommended solutions through our strategic partnerships:",
       details: [
-        "Dojo payment terminals (next-day settlement 7 days/week)",
+        <>
+          <a href="https://dojo.tech/" target="_blank" rel="noopener noreferrer" className="text-accent-600 hover:text-accent-700 font-medium transition-colors">
+            Dojo
+          </a>
+          {" payment terminals (next-day settlement 7 days/week)"}
+        </>,
         "Business funding (£1K-£1M, revenue-based repayment)",
         "Booking system integration (unified platform)"
       ],

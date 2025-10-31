@@ -54,7 +54,11 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4">PARTNERSHIP</h4>
             <ul className="space-y-2 text-gray-400 text-sm mb-6">
-              <li>Dojo Certified Partner</li>
+              <li>
+                <a href="https://dojo.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Dojo Certified Partner
+                </a>
+              </li>
               <li>PCI Compliant</li>
               <li>110,000+ UK businesses on network</li>
             </ul>

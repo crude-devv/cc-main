@@ -72,7 +72,7 @@ export default function Partnership() {
           {/* BRIDGE SECTION */}
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-lg text-gray-300">
-              Partner with <strong className="text-accent-400">Dojo</strong> for measurable competitive advantages.
+              Partner with <a href="https://dojo.tech/" target="_blank" rel="noopener noreferrer" className="font-bold text-accent-400 hover:text-accent-300 transition-colors">Dojo</a> for measurable competitive advantages.
             </p>
           </div>
 
@@ -117,7 +117,9 @@ export default function Partnership() {
               Intelligence with implementation. Strategy without theater.
             </p>
             <div className="text-sm text-accent-400 space-x-3">
-              <span>Dojo Certified Partner</span>
+              <a href="https://dojo.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-accent-300 transition-colors">
+                Dojo Certified Partner
+              </a>
               <span>•</span>
               <span>PCI Compliant</span>
             </div>
