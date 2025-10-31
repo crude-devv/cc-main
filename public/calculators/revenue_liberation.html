@@ -304,7 +304,7 @@
                         <input type="hidden" name="from_name" value="Crude Capital Calculators">
                         <input type="hidden" name="calculator" value="Revenue Liberation Engine">
                         <input type="hidden" id="calculation-results" name="results" value="">
-                            <input type="email" id="prospect-email" name="email" placeholder="Enter your business email" required style="flex: 1 1 300px; padding: 1rem; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem; min-width: 250px;">
+                            <input type="email" id="prospect-email" name="email" placeholder="your.name@company.com" required style="flex: 1 1 300px; padding: 1rem; border: 1px solid #ccc; border-radius: 12px; font-size: 1rem; min-width: 250px;">
                             <button type="submit" id="cta-button" class="cta-button" disabled style="flex: 0 0 auto; white-space: nowrap;">
                                 Get Your Detailed Report
                                 <span class="arrow">→</span>
@@ -427,9 +427,39 @@ I'm interested in learning more about how Crude Capital Merchants can help me re
             const ctaForm = document.getElementById('cta-form');
             const emailInput = document.getElementById('prospect-email');
 
+            // Business email validation
+            const freeEmailDomains = [
+                'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+                'icloud.com', 'mail.com', 'protonmail.com', 'zoho.com', 'yandex.com',
+                'gmx.com', 'live.com', 'msn.com', 'me.com', 'btinternet.com'
+            ];
+
+            const isBusinessEmail = (email) => {
+                if (!email || !email.includes('@')) return false;
+                const domain = email.split('@')[1].toLowerCase();
+                return !freeEmailDomains.includes(domain);
+            };
+
+            const emailError = document.createElement('p');
+            emailError.style.color = '#DC2626';
+            emailError.style.fontSize = '0.875rem';
+            emailError.style.marginTop = '0.5rem';
+            emailError.style.display = 'none';
+            emailError.textContent = 'Please use your business email address';
+            emailInput.parentNode.insertBefore(emailError, emailInput.nextSibling);
+
             emailInput.addEventListener('input', () => {
+                const email = emailInput.value;
+                const isValid = emailInput.checkValidity() && isBusinessEmail(email);
                 const ctaButton = document.getElementById('cta-button');
-                ctaButton.disabled = !emailInput.checkValidity();
+
+                if (email && !isBusinessEmail(email)) {
+                    emailError.style.display = 'block';
+                    ctaButton.disabled = true;
+                } else {
+                    emailError.style.display = 'none';
+                    ctaButton.disabled = !isValid;
+                }
             });
 
             ctaForm.addEventListener('submit', async (e) => {
