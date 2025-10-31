@@ -1,10 +1,11 @@
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
+import WhoBenefitsMost from '@/components/WhoBenefitsMost'
+import WhatWeActuallyDo from '@/components/WhatWeActuallyDo'
+import Partnership from '@/components/Partnership'
 import PatternRecognition from '@/components/PatternRecognition'
 import Process from '@/components/Process'
-import Partnership from '@/components/Partnership'
-import AppliedIntelligence from '@/components/AppliedIntelligence'
-import Contact from '@/components/Contact'
+import PaymentReviewForm from '@/components/PaymentReviewForm'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/ScrollProgress'
 
@@ -14,11 +15,12 @@ export default function Home() {
       <ScrollProgress />
       <Navigation />
       <Hero />
+      <WhoBenefitsMost />
+      <WhatWeActuallyDo />
+      <Partnership />
       <PatternRecognition />
       <Process />
-      <Partnership />
-      <AppliedIntelligence />
-      <Contact />
+      <PaymentReviewForm />
       <Footer />
     </main>
   )
