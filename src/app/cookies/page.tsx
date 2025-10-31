@@ -167,7 +167,7 @@ export default function CookiePolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">10. More Information</h2>
             <p className="text-gray-700 mb-4">
-              For more information about how we handle your personal data, please see our <Link href="/privacy-policy" className="text-accent-600 hover:text-accent-700">Privacy Policy</Link>.
+              For more information about how we handle your personal data, please see our <Link href="/privacy" className="text-accent-600 hover:text-accent-700">Privacy Policy</Link>.
             </p>
             <p className="text-gray-700 mb-4">
               If you have questions about our use of cookies, please contact us at:

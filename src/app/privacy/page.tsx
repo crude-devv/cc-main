@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Cookies and Tracking</h2>
             <p className="text-gray-700 mb-4">
-              We use cookies and similar tracking technologies to collect and track information about your browsing activities. For more details, please see our <Link href="/cookie-policy" className="text-accent-600 hover:text-accent-700">Cookie Policy</Link>.
+              We use cookies and similar tracking technologies to collect and track information about your browsing activities. For more details, please see our <Link href="/cookies" className="text-accent-600 hover:text-accent-700">Cookie Policy</Link>.
             </p>
           </section>
 
