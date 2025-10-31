@@ -46,6 +46,7 @@
         .roi-card h4 { font-size: 1rem; color: var(--color-slate-300); }
         .roi-value { font-size: 2rem; font-family: var(--font-heading); color: white; }
         .tooltip { cursor: help; border-bottom: 1px dotted; }
+        .blurred-detail { filter: blur(12px); user-select: none; pointer-events: none; }
         @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
         @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel { padding: 2rem 1.5rem; } .tco-grid { grid-template-columns: 1fr; } }
     </style>
@@ -90,22 +91,22 @@
                         <ul>
                             <li><span>Transaction Fees</span> <span id="comp-fee-cost">£0</span></li>
                             <li><span>Hardware Fees</span> <span id="comp-rental-cost">£0</span></li>
-                            <li class="hidden-cost"><span><span class="tooltip">Delayed Capital Cost ⓘ</span></span> <span id="comp-capital-cost">£0</span></li>
-                            <li class="hidden-cost"><span><span class="tooltip">PCI Compliance Cost ⓘ</span></span> <span id="comp-pci-cost">£0</span></li>
-                            <li class="hidden-cost"><span><span class="tooltip">Downtime Risk Cost ⓘ</span></span> <span id="comp-downtime-cost">£0</span></li>
-                            <li class="hidden-cost"><span><span class="tooltip">Wasted Support Time ⓘ</span></span> <span id="comp-support-cost">£0</span></li>
+                            <li class="hidden-cost"><span>Delayed Capital Cost</span> <span id="comp-capital-cost">£0</span></li>
+                            <li class="hidden-cost"><span>PCI Compliance Cost</span> <span id="comp-pci-cost">£0</span></li>
+                            <li class="hidden-cost"><span>Downtime Risk Cost</span> <span id="comp-downtime-cost">£0</span></li>
+                            <li class="hidden-cost"><span>Wasted Support Time</span> <span id="comp-support-cost">£0</span></li>
                             <li class="total"><span>Annual TCO</span> <span id="comp-total-cost">£0</span></li>
                         </ul>
                     </div>
                     <div class="tco-card dojo">
                         <h3>Crude Capital Merchants</h3>
                         <ul>
-                            <li><span>Transaction Fees</span> <span id="dojo-fee-cost">£0</span></li>
-                            <li><span>Hardware Fees</span> <span id="dojo-rental-cost">£0</span></li>
-                            <li><span>Delayed Capital Cost</span> <span>£0</span></li>
-                            <li><span>PCI Compliance Cost</span> <span>£0</span></li>
-                            <li><span>Downtime Risk Cost</span> <span id="dojo-downtime-cost">£0</span></li>
-                            <li><span>Wasted Support Time</span> <span id="dojo-support-cost">£0</span></li>
+                            <li class="blurred-detail"><span>Transaction Fees</span> <span id="dojo-fee-cost">£0</span></li>
+                            <li class="blurred-detail"><span>Hardware Fees</span> <span id="dojo-rental-cost">£0</span></li>
+                            <li class="blurred-detail"><span>Delayed Capital Cost</span> <span>£0</span></li>
+                            <li class="blurred-detail"><span>PCI Compliance Cost</span> <span>£0</span></li>
+                            <li class="blurred-detail"><span>Downtime Risk Cost</span> <span id="dojo-downtime-cost">£0</span></li>
+                            <li class="blurred-detail"><span>Wasted Support Time</span> <span id="dojo-support-cost">£0</span></li>
                             <li class="total"><span>Annual TCO</span> <span id="dojo-total-cost">£0</span></li>
                         </ul>
                     </div>
@@ -113,16 +114,6 @@
                 <div class="impact-section">
                     <h3>Your Potential Annual Savings</h3>
                     <div class="impact-number" id="annual-savings">£0</div>
-                    <div class="roi-grid">
-                        <div class="roi-card">
-                            <h4>First-Year Switching ROI</h4>
-                            <div class="roi-value" id="switching-roi">0%</div>
-                        </div>
-                        <div class="roi-card">
-                            <h4>Includes Exit Fee Buyout</h4>
-                            <div class="roi-value" id="exit-fee-buyout">£3,000</div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- CTA Section -->
@@ -185,9 +176,7 @@
             dojoDowntimeCost: document.getElementById('dojo-downtime-cost'),
             dojoSupportCost: document.getElementById('dojo-support-cost'),
             dojoTotalCost: document.getElementById('dojo-total-cost'),
-            annualSavings: document.getElementById('annual-savings'),
-            switchingRoi: document.getElementById('switching-roi'),
-            exitFeeBuyout: document.getElementById('exit-fee-buyout')
+            annualSavings: document.getElementById('annual-savings')
         };
 
         const COMPETITOR_PROFILES = {
@@ -244,15 +233,10 @@
             elements.dojoSupportCost.textContent = formatCurrency(dojoSupportCost);
             elements.dojoTotalCost.textContent = formatCurrency(dojoTotalCost);
 
-            // Display Savings & ROI
+            // Display Savings
             const annualSavings = compTotalCost - dojoTotalCost;
-            const firstYearValue = annualSavings + DOJO_PROFILE.exitFeeBuyout;
-            const dojoFirstYearCost = dojoRentalCost; // Assuming first year cost is just hardware rental
-            const switchingRoi = (dojoFirstYearCost > 0) ? (firstYearValue / dojoFirstYearCost) * 100 : 0;
-            
+
             elements.annualSavings.textContent = formatCurrency(annualSavings);
-            elements.switchingRoi.textContent = `${Math.round(switchingRoi)}%`;
-            elements.exitFeeBuyout.textContent = formatCurrency(DOJO_PROFILE.exitFeeBuyout);
 
             // Update CTA with calculation results
             const resultsText = `
@@ -277,8 +261,6 @@ CCM Solution Total Cost of Ownership (Annual):
 TOTAL ANNUAL TCO: ${elements.dojoTotalCost.textContent}
 
 YOUR POTENTIAL ANNUAL SAVINGS: ${formatCurrency(annualSavings)}
-First-Year Switching ROI: ${Math.round(switchingRoi)}%
-Includes Exit Fee Buyout: ${formatCurrency(DOJO_PROFILE.exitFeeBuyout)}
             `.trim();
 
             const resultsInput = document.getElementById('calculation-results');
@@ -331,8 +313,7 @@ Includes Exit Fee Buyout: ${formatCurrency(DOJO_PROFILE.exitFeeBuyout)}
     });
     </script>
     <footer class="site-footer" style="padding: 2rem; text-align: center; font-size: 0.875rem; color: #94a3b8; border-top: 1px solid #e2e8f0; margin-top: 3rem;">
-        <p>© 2025 Crude Capital Payments Intelligence. All Rights Reserved.</p>
-        <p class="disclaimer" style="margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">*Disclaimer: These figures are estimates for strategic planning, based on industry-specific financial models. Actual costs depend on multiple business factors. This tool does not constitute financial advice.</p>
+        <p class="disclaimer" style="max-width: 800px; margin-left: auto; margin-right: auto;">*Disclaimer: These figures are estimates for strategic planning, based on industry-specific financial models. Actual costs depend on multiple business factors. This tool does not constitute financial advice.</p>
     </footer>
 </body>
 </html>

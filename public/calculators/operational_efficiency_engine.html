@@ -75,6 +75,7 @@
         .cta-button:disabled { background-color: var(--color-slate-200); color: var(--color-slate-400); cursor: not-allowed; }
         .site-footer { padding: 2rem; text-align: center; font-size: 0.875rem; color: var(--color-slate-400); background-color: var(--color-light); border-top: 1px solid var(--color-slate-200); }
         .disclaimer { font-size: 0.75rem; color: var(--color-slate-400); max-width: 800px; margin: 1.5rem auto 0; line-height: 1.6; }
+        .blurred-detail { filter: blur(18px); user-select: none; pointer-events: none; }
         @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
         @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel, .cta-section { padding: 2rem 1.5rem; } .breakdown-grid { grid-template-columns: 1fr; } .cta-form { flex-direction: column; } }
     </style>
@@ -136,12 +137,12 @@
                 </div>
                 <div class="impact-section">
                     <h3>Unlocked Working Capital</h3>
-                    <div class="impact-number" id="working-capital-unlocked">£0</div>
+                    <div class="impact-number blurred-detail" id="working-capital-unlocked">£0</div>
                     <p>The permanent, one-time increase in your cash-on-hand from moving to next-day settlements.</p>
                 </div>
                 <div class="impact-section funding">
                     <h3>Available Growth Funding</h3>
-                    <div class="impact-number" id="available-funding">£0</div>
+                    <div class="impact-number blurred-detail" id="available-funding">£0</div>
                     <p>The amount of flexible, revenue-based capital you can access to fuel your next stage of growth.</p>
                 </div>
                 <!-- ENHANCEMENT: CTA Section redesigned -->
@@ -163,9 +164,7 @@
             </div>
         </main>
         
-        <!-- ENHANCEMENT: Footer restored -->
         <footer class="site-footer">
-            <p>© 2025 Crude Capital Payments Intelligence. All Rights Reserved.</p>
             <p class="disclaimer">*Disclaimer: These figures are estimates for strategic planning, based on industry averages and case study data. Actual savings and funding amounts are subject to a full business assessment. This tool does not constitute a binding financial quote.</p>
         </footer>
     </div>

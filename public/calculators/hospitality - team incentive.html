@@ -47,6 +47,7 @@
         .tooltip { position: relative; display: inline-flex; align-items: center; cursor: help; border-bottom: 1px dotted; }
         .tooltip-text { visibility: hidden; width: 250px; background-color: var(--color-dark); color: #fff; text-align: left; border-radius: 6px; padding: 10px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -125px; opacity: 0; transition: opacity 0.3s; }
         .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .blurred-detail { filter: blur(12px); user-select: none; pointer-events: none; }
         @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
         @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel { padding: 2rem 1.5rem; } .breakdown-grid { grid-template-columns: 1fr; } }
     </style>
@@ -100,12 +101,12 @@
                 <div class="breakdown-grid">
                     <div class="breakdown-card">
                         <h4>To Your Team <span class="tooltip">ⓘ<span class="tooltip-text">Based on case studies like NQ64, which saw a 3,000% increase in tips. We use a conservative model to estimate the potential uplift in your team's earnings.</span></span></h4>
-                        <div class="breakdown-value" id="tip-uplift">£0</div>
+                        <div class="breakdown-value blurred-detail" id="tip-uplift">£0</div>
                         <p>Additional annual tips, boosting take-home pay at no cost to you.</p>
                     </div>
                     <div class="breakdown-card">
                         <h4>To Your Bottom Line <span class="tooltip">ⓘ<span class="tooltip-text">Calculated from reducing turnover costs (hiring, training) and saving labor hours on daily admin tasks like cashing up.</span></span></h4>
-                        <div class="breakdown-value" id="business-savings">£0</div>
+                        <div class="breakdown-value blurred-detail" id="business-savings">£0</div>
                         <p>Direct annual savings from retaining staff and improving efficiency.</p>
                     </div>
                 </div>

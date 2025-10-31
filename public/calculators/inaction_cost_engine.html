@@ -137,23 +137,22 @@
 
                 <div class="cta-section">
                     <h3>Stop The Drain. Recapture Your Profit.</h3>
-                    <form id="cta-form" class="cta-form" action="https://api.web3forms.com/submit" method="POST">
-                        <input type="hidden" name="access_key" value="9b04c636-7380-446b-9269-f2a283b02a81">
-                        <input type="hidden" name="subject" value="New Submission: Cost of Inaction Calculator">
-                        <input type="hidden" name="from_name" value="Crude Capital Calculators">
-                        <input type="hidden" name="calculator" value="Cost of Inaction Engine">
-                        <input type="hidden" id="calculation-results" name="results" value="">
-                        <input type="email" id="prospect-email" name="email" placeholder="Enter your business email" required>
-                        <button type="submit" id="cta-button" class="cta-button" disabled>Get Your Detailed Report</button>
-                    </form>
-                    <p style="color: rgba(255,255,255,0.7); margin-top: 16px; font-size: 14px; text-align: center;">
-                        or <a href="https://calendly.com/crude-capital-consulting/30min" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); text-decoration: underline; font-weight: 600;">Book a Consultation</a> to discuss your results
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 24px; font-size: 16px; text-align: center;">
+                        Ready to stop losing money? Book a consultation to discuss your results and create an action plan.
                     </p>
+                    <a
+                        href="https://calendly.com/crude-capital-consulting/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="cta-button"
+                        style="display: inline-block; text-decoration: none; padding: 1rem 2.5rem; font-size: 1.1rem;"
+                    >
+                        Book a Consultation
+                    </a>
                 </div>
             </div>
         </main>
         <footer class="site-footer">
-            <p>© 2025 Crude Capital Payments Intelligence. All Rights Reserved.</p>
             <p class="disclaimer">*Disclaimer: These figures are estimates for strategic planning, based on industry-specific financial models. Actual costs depend on multiple business factors. This tool does not constitute financial advice.</p>
         </footer>
     </div>
@@ -169,10 +168,7 @@
             missedDiscounts: document.getElementById('missed-discounts'),
             operationalDrag: document.getElementById('operational-drag'),
             cashflowRisk: document.getElementById('cashflow-risk'),
-            yearlyCost: document.getElementById('yearly-cost'),
-            ctaForm: document.getElementById('cta-form'),
-            emailInput: document.getElementById('prospect-email'),
-            ctaButton: document.getElementById('cta-button')
+            yearlyCost: document.getElementById('yearly-cost')
         };
 
         const INDUSTRY_PROFILES = {
@@ -231,29 +227,6 @@
             };
             updateCounter();
 
-            // Update CTA with calculation results
-            const resultsText = `
-Cost of Inaction Analysis Results:
-
-Business Type: ${elements.industry.value}
-Daily Weekend Revenue: £${dailyRevenue.toLocaleString('en-GB')}
-Current Settlement Delay: ${currentDelay} days
-
-Daily Costs from Delayed Settlement:
-- Missed Early Payment Discounts: £${missedDiscountsDaily.toFixed(2)}
-- Operational Drag: £${operationalDragDaily.toFixed(2)}
-- Cashflow Risk Premium: £${cashflowRiskDaily.toFixed(2)}
-
-TOTAL DAILY COST: £${totalDailyCost.toFixed(2)}
-TOTAL ANNUAL COST OF INACTION: £${totalYearlyCost.toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-
-This is the total amount of your own money you are losing by waiting another year to switch to an optimized payment partner.
-            `.trim();
-
-            const resultsInput = document.getElementById('calculation-results');
-            if (resultsInput) {
-                resultsInput.value = resultsText;
-            }
         };
 
         const updateSliderDisplay = () => {
@@ -265,31 +238,6 @@ This is the total amount of your own money you are losing by waiting another yea
             updateSliderDisplay();
             calculateAndDisplay();
         }));
-
-        elements.emailInput.addEventListener('input', () => {
-            elements.ctaButton.disabled = !elements.emailInput.checkValidity();
-        });
-
-        // Form submission handler
-        elements.ctaForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                const response = await fetch(elements.ctaForm.action, {
-                    method: 'POST',
-                    body: new FormData(elements.ctaForm),
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (response.ok) {
-                    alert('Report sent! Check your email for your detailed analysis and booking link.');
-                    elements.ctaForm.reset();
-                    elements.ctaButton.disabled = true;
-                } else {
-                    alert('Error sending report. Please try again.');
-                }
-            } catch (error) {
-                alert('Error sending report. Please try again.');
-            }
-        });
 
         // Initialize
         updateSliderDisplay();

@@ -80,6 +80,7 @@
         .tooltip { position: relative; display: inline-flex; align-items: center; cursor: help; }
         .tooltip-text { visibility: hidden; width: 250px; background-color: var(--color-dark); color: #fff; text-align: left; border-radius: 6px; padding: 10px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -125px; opacity: 0; transition: opacity 0.3s; }
         .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .blurred-detail { filter: blur(12px); user-select: none; pointer-events: none; }
 
         @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
         @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel, .cta-section { padding: 2rem 1.5rem; } .repayment-grid { grid-template-columns: 1fr; } .cta-form { flex-direction: column; } }
@@ -140,17 +141,17 @@
                     <div class="repayment-grid">
                         <div class="repayment-card">
                             <h4>Daily Repayment</h4>
-                            <div class="repayment-value" id="daily-repayment">£0</div>
+                            <div class="repayment-value blurred-detail" id="daily-repayment">£0</div>
                             <p>Paid flexibly from a fixed 15% of daily sales.</p>
                         </div>
                         <div class="repayment-card total">
                             <h4>Total Repayment <span class="tooltip">ⓘ<span class="tooltip-text">This is the total amount you repay, including the principal and a transparent, fixed fee. There is no compounding interest.</span></span></h4>
-                            <div class="repayment-value" id="total-repayment">£0</div>
+                            <div class="repayment-value blurred-detail" id="total-repayment">£0</div>
                             <p>Includes a single, fixed fee. Simple.</p>
                         </div>
                         <div class="repayment-card">
                             <h4>Estimated Term</h4>
-                            <div class="repayment-value" id="funding-term">0 Mths</div>
+                            <div class="repayment-value blurred-detail" id="funding-term">0 Mths</div>
                             <p>Pay faster in busy months, slower in quiet ones.</p>
                         </div>
                     </div>
@@ -173,7 +174,6 @@
             </div>
         </main>
         <footer class="site-footer">
-            <p>© 2025 Crude Capital Payments Intelligence. All Rights Reserved.</p>
             <p class="disclaimer">*Disclaimer: These figures are estimates for strategic planning, based on industry-specific financial models. Actual costs depend on multiple business factors. This tool does not constitute financial advice.</p>
         </footer>
     </div>
