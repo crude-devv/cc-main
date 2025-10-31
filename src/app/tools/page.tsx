@@ -4,7 +4,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Payment Intelligence Calculators | Crude Capital',
+  title: 'Payment Calculators For Merchants | Crude Capital',
   description: 'Quantify hidden costs, measure inefficiencies, and calculate optimization potential across your payment infrastructure.',
 };
 
@@ -150,7 +150,7 @@ export default function ToolsPage() {
             Our calculators quantify specific inefficiencies. For comprehensive infrastructure optimization, book a consultation.
           </p>
           <Link
-            href="https://calendly.com/crude-capital-info/30min"
+            href="https://calendly.com/crude-capital-consulting/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg"
