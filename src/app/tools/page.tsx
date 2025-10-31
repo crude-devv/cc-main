@@ -122,24 +122,6 @@ export default function ToolsPage() {
         </div>
       </div>
 
-      <style jsx global>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
-
       {/* Bottom CTA Section */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 text-center">
         <div className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-200 rounded-2xl p-8 sm:p-12">
