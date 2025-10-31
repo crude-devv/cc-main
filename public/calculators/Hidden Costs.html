@@ -49,6 +49,13 @@
         .blurred-detail { filter: blur(12px); user-select: none; pointer-events: none; }
         @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } .input-panel { border-right: none; border-bottom: 1px solid var(--color-slate-200); } }
         @media (max-width: 768px) { body { padding: 1rem 0.5rem; } .hero, .input-panel, .results-panel { padding: 2rem 1.5rem; } .tco-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 640px) {
+            .hero { padding: 1.5rem !important; }
+            .input-panel, .results-panel { padding: 1.5rem !important; }
+            .form-group { margin-bottom: 1.5rem; }
+            .tco-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .impact-section { padding: 2rem 1.5rem; }
+        }
     </style>
 </head>
 <body>

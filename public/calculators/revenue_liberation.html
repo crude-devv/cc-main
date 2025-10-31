@@ -164,6 +164,36 @@
             .hero, .input-panel, .results-panel, .cta-section { padding: 2rem 1.5rem; }
             .transformation-grid { grid-template-columns: 1fr; }
         }
+
+        @media (max-width: 640px) {
+            .hero { padding: 1.5rem !important; }
+            .input-panel, .results-panel { padding: 1.5rem !important; }
+            .form-group { margin-bottom: 1.5rem; }
+            .slider-group { margin-bottom: 1.5rem; }
+            .cta-section { padding: 1.5rem !important; }
+            .impact-section { padding: 2rem 1.5rem; }
+            .cashflow-chart-container { margin-bottom: 1.5rem; }
+
+            /* Enhanced touch targets for sliders */
+            input[type="range"] { height: 12px; }
+            input[type="range"]::-webkit-slider-thumb { width: 44px; height: 44px; margin-top: -16px; }
+            input[type="range"]::-moz-range-thumb { width: 44px; height: 44px; }
+
+            /* Enhanced touch targets for buttons and selects */
+            .cta-button { min-height: 48px; padding: 1rem 1.5rem; font-size: 1rem; }
+            .form-group select { min-height: 48px; padding: 0.875rem 1rem 0.875rem 3rem; }
+
+            /* Typography adjustments */
+            .hero h1 { font-size: 1.875rem; }
+            .hero p { font-size: 1rem; }
+            .input-panel h2, .results-panel h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+            .slider-value { font-size: 1.5rem; }
+            .impact-number { font-size: 2.5rem; }
+            .revenue-amount { font-size: 1.75rem; }
+            .transformation-grid { gap: 1rem; }
+            .status-card { padding: 1rem; }
+            .chart-bar-group { height: 100px; gap: 1rem; }
+        }
     </style>
 </head>
 <body>
