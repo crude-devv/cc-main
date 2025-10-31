@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Crude Capital | Payment Infrastructure Intelligence for UK Operators',
@@ -27,7 +28,10 @@ export default function RootLayout({
           rel="stylesheet" 
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
